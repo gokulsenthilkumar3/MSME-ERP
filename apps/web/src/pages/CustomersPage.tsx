@@ -3,6 +3,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Plus, Users, Search, ChevronRight } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { customersApi } from '../lib/api';
 
 interface Customer {
@@ -14,6 +17,14 @@ interface Customer {
   balance: number;
 }
 
+const customerSchema = z.object({
+  name: z.string().min(2, 'பெயர் குறைந்தது 2 எழுத்துகள் இருக்க வேண்டும்'),
+  phone: z.string().regex(/^\d{10}$/, '10 இலக்க அலைபேசி எண் தேவை').or(z.literal('')),
+  gstin: z.string().regex(/^(\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1})?$/, 'சரியான GSTIN தேவை').optional().or(z.literal('')),
+  address: z.string().optional(),
+});
+type CustomerFormValues = z.infer<typeof customerSchema>;
+
 function formatCurrency(n: number) {
   return `₹${Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 0 })}`;
 }
@@ -24,7 +35,12 @@ export default function CustomersPage() {
   const [search, setSearch] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editCustomer, setEditCustomer] = useState<Customer | null>(null);
-  const [form, setForm] = useState({ name: '', phone: '', gstin: '', address: '' });
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<CustomerFormValues>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(customerSchema as any),
+    defaultValues: { name: '', phone: '', gstin: '', address: '' }
+  });
 
   const { data, isLoading } = useQuery({
     queryKey: ['customers', search],
@@ -53,19 +69,27 @@ export default function CustomersPage() {
   });
 
   const resetForm = () => {
-    setForm({ name: '', phone: '', gstin: '', address: '' });
+    reset({ name: '', phone: '', gstin: '', address: '' });
     setShowForm(false);
     setEditCustomer(null);
   };
 
   const openEdit = (c: Customer) => {
     setEditCustomer(c);
-    setForm({ name: c.name, phone: c.phone ?? '', gstin: c.gstin ?? '', address: c.address ?? '' });
+    reset({
+      name: c.name,
+      phone: c.phone ? c.phone.replace('+91', '') : '',
+      gstin: c.gstin ?? '',
+      address: c.address ?? ''
+    });
     setShowForm(true);
   };
 
-  const handleSubmit = () => {
-    const payload = { ...form, phone: form.phone ? `+91${form.phone.replace(/\D/g, '').slice(-10)}` : undefined };
+  const onSubmit = (data: CustomerFormValues) => {
+    const payload = {
+      ...data,
+      phone: data.phone ? `+91${data.phone}` : undefined,
+    };
     if (editCustomer) {
       updateMutation.mutate({ id: editCustomer.id, data: payload });
     } else {
@@ -77,37 +101,36 @@ export default function CustomersPage() {
 
   if (showForm) {
     return (
-      <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="section-header section-header-lg">
           <h1>{editCustomer ? 'வாடிக்கையாளர் திருத்து' : t('addCustomer')}</h1>
-          <button className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="cf-name">👤 {t('customerName')}</label>
-          <input id="cf-name" className="form-input" value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. குமார்" />
+          <input id="cf-name" className="form-input" {...register('name')} placeholder="e.g. குமார்" />
+          {errors.name && <span className="form-error-msg">{errors.name.message}</span>}
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="cf-phone">📱 {t('phone')}</label>
-          <input id="cf-phone" className="form-input" type="tel" value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="98765 43210" />
+          <input id="cf-phone" className="form-input" type="tel" {...register('phone')} placeholder="9876543210" />
+          {errors.phone && <span className="form-error-msg">{errors.phone.message}</span>}
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="cf-gstin">GSTIN (விருப்பமானது)</label>
-          <input id="cf-gstin" className="form-input" value={form.gstin}
-            onChange={(e) => setForm({ ...form, gstin: e.target.value })} placeholder="22AAAAA0000A1Z5" />
+          <input id="cf-gstin" className="form-input" {...register('gstin')} placeholder="22AAAAA0000A1Z5" />
+          {errors.gstin && <span className="form-error-msg">{errors.gstin.message}</span>}
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="cf-address">📍 {t('address')}</label>
-          <textarea id="cf-address" className="form-input" value={form.address}
-            onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="முகவரி..." />
+          <textarea id="cf-address" className="form-input" {...register('address')} placeholder="முகவரி..." />
+          {errors.address && <span className="form-error-msg">{errors.address.message}</span>}
         </div>
-        <button id="save-customer-btn" className="btn btn-primary btn-full"
-          onClick={handleSubmit}
+        <button type="submit" id="save-customer-btn" className="btn btn-primary btn-full"
           disabled={createMutation.isPending || updateMutation.isPending}>
           {t('save')}
         </button>
-      </div>
+      </form>
     );
   }
 

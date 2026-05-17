@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Plus, FileText, Search, ChevronRight, Printer } from 'lucide-react';
+import { Plus, FileText, Search, Printer } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { invoicesApi, customersApi, productsApi } from '../lib/api';
 
@@ -291,11 +291,10 @@ export default function InvoicesPage() {
                 </select>
               </div>
               <button
-                className="btn btn-secondary btn-sm"
+                className="btn btn-secondary btn-sm print-btn-inline"
                 onClick={(e) => { e.stopPropagation(); printMutation.mutate(inv.id); }}
                 disabled={printMutation.isPending}
                 title="Print PDF"
-                style={{ marginLeft: '8px', padding: '6px' }}
               >
                 <Printer size={16} />
               </button>

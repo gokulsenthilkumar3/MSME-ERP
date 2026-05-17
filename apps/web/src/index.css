@@ -1016,3 +1016,15 @@ textarea.form-input {
     display: none !important;
   }
 }
+
+.form-error-msg {
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-danger);
+}
+
+.print-btn-inline {
+  margin-left: 0.5rem;
+  padding: 0.375rem;
+}

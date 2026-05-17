@@ -3,6 +3,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Plus, Package, Search, AlertTriangle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { productsApi } from '../lib/api';
 
 interface Product {
@@ -18,6 +21,18 @@ interface Product {
   is_active: boolean;
 }
 
+const productSchema = z.object({
+  name: z.string().min(2, 'பொருள் பெயர் தேவை'),
+  sku: z.string().min(2, 'SKU குறியீடு தேவை'),
+  unit: z.string().min(1, 'அலகு தேவை'),
+  price: z.coerce.number().positive('சரியான விலை தேவை'),
+  gst_rate: z.coerce.number().min(0, 'சரியான GST தேவை'),
+  hsn_code: z.string().optional(),
+  stock_qty: z.coerce.number().min(0, 'சரியான இருப்பு தேவை'),
+  low_stock_threshold: z.coerce.number().min(0, 'சரியான எச்சரிக்கை வரம்பு தேவை'),
+});
+type ProductFormValues = z.infer<typeof productSchema>;
+
 function formatCurrency(n: number) {
   return `₹${n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -29,10 +44,13 @@ export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
 
-  // Form state
-  const [form, setForm] = useState({
-    name: '', sku: '', unit: 'pcs', price: '', gst_rate: '5',
-    hsn_code: '', stock_qty: '0', low_stock_threshold: '10',
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<ProductFormValues>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(productSchema as any),
+    defaultValues: {
+      name: '', sku: '', unit: 'pcs', price: 0, gst_rate: 5,
+      hsn_code: '', stock_qty: 0, low_stock_threshold: 10,
+    }
   });
 
   const { data, isLoading } = useQuery({
@@ -72,34 +90,29 @@ export default function ProductsPage() {
   });
 
   const resetForm = () => {
-    setForm({ name: '', sku: '', unit: 'pcs', price: '', gst_rate: '5', hsn_code: '', stock_qty: '0', low_stock_threshold: '10' });
+    reset({
+      name: '', sku: '', unit: 'pcs', price: 0, gst_rate: 5, hsn_code: '', stock_qty: 0, low_stock_threshold: 10
+    });
     setShowForm(false);
     setEditProduct(null);
   };
 
   const openEdit = (p: Product) => {
     setEditProduct(p);
-    setForm({
+    reset({
       name: p.name, sku: p.sku, unit: p.unit,
-      price: String(p.price), gst_rate: String(p.gst_rate),
-      hsn_code: p.hsn_code ?? '', stock_qty: String(p.stock_qty),
-      low_stock_threshold: String(p.low_stock_threshold),
+      price: p.price, gst_rate: p.gst_rate,
+      hsn_code: p.hsn_code ?? '', stock_qty: p.stock_qty,
+      low_stock_threshold: p.low_stock_threshold,
     });
     setShowForm(true);
   };
 
-  const handleSubmit = () => {
-    const payload = {
-      ...form,
-      price: parseFloat(form.price),
-      gst_rate: parseFloat(form.gst_rate),
-      stock_qty: parseFloat(form.stock_qty),
-      low_stock_threshold: parseFloat(form.low_stock_threshold),
-    };
+  const onSubmit = (data: ProductFormValues) => {
     if (editProduct) {
-      updateMutation.mutate({ id: editProduct.id, data: payload });
+      updateMutation.mutate({ id: editProduct.id, data });
     } else {
-      createMutation.mutate(payload);
+      createMutation.mutate(data);
     }
   };
 
@@ -108,84 +121,82 @@ export default function ProductsPage() {
 
   if (showForm) {
     return (
-      <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="section-header section-header-lg">
           <h1>{editProduct ? 'பொருள் திருத்து' : t('addProduct')}</h1>
-          <button className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
         </div>
 
-        {(['name', 'sku'] as const).map((field) => (
-          <div className="form-group" key={field}>
-            <label className="form-label" htmlFor={`pf-${field}`}>
-              {field === 'name' ? t('productName') : 'SKU'}
-            </label>
-            <input
-              id={`pf-${field}`}
-              className="form-input"
-              value={form[field]}
-              onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-              placeholder={field === 'name' ? 'e.g. அரிசி' : 'e.g. RICE-001'}
-            />
-          </div>
-        ))}
+        <div className="form-group">
+          <label className="form-label" htmlFor="pf-name">{t('productName')}</label>
+          <input id="pf-name" className="form-input" {...register('name')} placeholder="e.g. அரிசி" />
+          {errors.name && <span className="form-error-msg">{errors.name.message}</span>}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label" htmlFor="pf-sku">SKU</label>
+          <input id="pf-sku" className="form-input" {...register('sku')} placeholder="e.g. RICE-001" />
+          {errors.sku && <span className="form-error-msg">{errors.sku.message}</span>}
+        </div>
 
         <div className="card-grid">
           <div className="form-group">
             <label className="form-label" htmlFor="pf-unit">{t('unit')}</label>
-            <select id="pf-unit" className="form-input form-select" value={form.unit}
-              onChange={(e) => setForm({ ...form, unit: e.target.value })}>
+            <select id="pf-unit" className="form-input form-select" {...register('unit')}>
               {['pcs', 'kg', 'litre', 'box', 'pack', 'set'].map(u => (
                 <option key={u} value={u}>{u}</option>
               ))}
             </select>
+            {errors.unit && <span className="form-error-msg">{errors.unit.message}</span>}
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="pf-gst">{t('gstRate')} %</label>
-            <select id="pf-gst" className="form-input form-select" value={form.gst_rate}
-              onChange={(e) => setForm({ ...form, gst_rate: e.target.value })}>
+            <select id="pf-gst" className="form-input form-select" {...register('gst_rate')}>
               {[0, 5, 12, 18, 28].map(r => (
                 <option key={r} value={r}>{r}%</option>
               ))}
             </select>
+            {errors.gst_rate && <span className="form-error-msg">{errors.gst_rate.message}</span>}
           </div>
         </div>
 
         <div className="card-grid">
           <div className="form-group">
             <label className="form-label" htmlFor="pf-price">{t('price')} (₹)</label>
-            <input id="pf-price" className="form-input" type="number" min="0" step="0.01"
-              value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+            <input id="pf-price" className="form-input" type="number" step="0.01" {...register('price')} />
+            {errors.price && <span className="form-error-msg">{errors.price.message}</span>}
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="pf-hsn">{t('hsnCode')}</label>
-            <input id="pf-hsn" className="form-input" value={form.hsn_code}
-              onChange={(e) => setForm({ ...form, hsn_code: e.target.value })} placeholder="e.g. 1006" />
+            <input id="pf-hsn" className="form-input" {...register('hsn_code')} placeholder="e.g. 1006" />
+            {errors.hsn_code && <span className="form-error-msg">{errors.hsn_code.message}</span>}
           </div>
         </div>
 
         <div className="card-grid">
           <div className="form-group">
             <label className="form-label" htmlFor="pf-stock">{t('stockQty')}</label>
-            <input id="pf-stock" className="form-input" type="number" min="0"
-              value={form.stock_qty} onChange={(e) => setForm({ ...form, stock_qty: e.target.value })} />
+            <input id="pf-stock" className="form-input" type="number" {...register('stock_qty')} />
+            {errors.stock_qty && <span className="form-error-msg">{errors.stock_qty.message}</span>}
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="pf-threshold">{t('lowStockThreshold')}</label>
-            <input id="pf-threshold" className="form-input" type="number" min="0"
-              value={form.low_stock_threshold} onChange={(e) => setForm({ ...form, low_stock_threshold: e.target.value })} />
+            <input id="pf-threshold" className="form-input" type="number" {...register('low_stock_threshold')} />
+            {errors.low_stock_threshold && <span className="form-error-msg">{errors.low_stock_threshold.message}</span>}
           </div>
         </div>
 
         <button
+          type="submit"
           id="save-product-btn"
           className="btn btn-primary btn-full"
-          onClick={handleSubmit}
           disabled={createMutation.isPending || updateMutation.isPending}
         >
           {t('save')}
         </button>
         {editProduct && (
           <button
+            type="button"
             id="delete-product-btn"
             className="btn btn-danger btn-full mt-3"
             onClick={() => deleteMutation.mutate(editProduct.id)}
@@ -194,7 +205,7 @@ export default function ProductsPage() {
             {t('delete')}
           </button>
         )}
-      </div>
+      </form>
     );
   }
 
