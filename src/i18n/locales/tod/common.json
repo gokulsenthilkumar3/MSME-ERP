@@ -1,0 +1,74 @@
+{
+  "_note": "Toda — Latin/IPA phonetic. ~1500 speakers, Nilgiris. Highly endangered. Requires expert community validation.",
+  "app": {
+    "name": "MSME ERP",
+    "tagline": "Ner vyapar eḷumayn paar"
+  },
+  "nav": {
+    "dashboard": "Mukhya Patti",
+    "inventory": "Saman Patti",
+    "sales": "Vil",
+    "purchases": "Vaangu",
+    "accounts": "Kanaakku",
+    "reports": "Vivaram",
+    "settings": "Amaippu",
+    "logout": "Puru Po"
+  },
+  "common": {
+    "save": "Vach",
+    "cancel": "Vidu",
+    "delete": "Nee",
+    "edit": "Thiru",
+    "add": "Ser",
+    "search": "Thedi",
+    "loading": "Varuthu...",
+    "success": "Sari",
+    "error": "Tappu",
+    "confirm": "Uthiri",
+    "yes": "Aam",
+    "no": "Illa",
+    "total": "Elli",
+    "date": "Naal",
+    "amount": "Pana",
+    "name": "Peru",
+    "status": "Nilai",
+    "actions": "Seyal"
+  },
+  "auth": {
+    "login": "Ulle Vaa",
+    "logout": "Puru Po",
+    "email": "Mail",
+    "password": "Kodu",
+    "forgot_password": "Kodu Maranthaaya?",
+    "welcome_back": "Marudum Vanga!"
+  },
+  "inventory": {
+    "title": "Saman Patti",
+    "product": "Padar",
+    "quantity": "Alavu",
+    "unit": "Alav",
+    "low_stock": "Saman Kurai",
+    "add_item": "Padar Ser"
+  },
+  "sales": {
+    "title": "Vil",
+    "invoice": "Bil Patti",
+    "customer": "Vaangu Aal",
+    "new_sale": "Puthiya Vil",
+    "total_sales": "Motta Vil"
+  },
+  "purchases": {
+    "title": "Vaangu",
+    "supplier": "Kudu Aal",
+    "new_purchase": "Puthiya Vaangu",
+    "total_purchases": "Motta Vaangu"
+  },
+  "accounts": {
+    "title": "Kanaakku",
+    "income": "Vara Pana",
+    "expense": "Po Pana",
+    "balance": "Michom",
+    "profit": "Laabam",
+    "loss": "Nashdam"
+  }
+}

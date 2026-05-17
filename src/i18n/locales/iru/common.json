@@ -1,0 +1,74 @@
+{
+  "_note": "Irula — Tamil script adaptation. ~200k speakers, Nilgiris/Coimbatore. Community validation required.",
+  "app": {
+    "name": "MSME ERP",
+    "tagline": "உங்க வியாபாரத்த எளுப்பா வச்சுக்குங்க"
+  },
+  "nav": {
+    "dashboard": "முக்கிய பக்கம்",
+    "inventory": "சாமான் லிஸ்டு",
+    "sales": "விக்குறது",
+    "purchases": "வாங்குறது",
+    "accounts": "கணக்கு",
+    "reports": "விவரம்",
+    "settings": "ஏற்பாடு",
+    "logout": "வெளிய போ"
+  },
+  "common": {
+    "save": "வச்சுக்கு",
+    "cancel": "விடு",
+    "delete": "கிழி",
+    "edit": "திருத்து",
+    "add": "சேர்",
+    "search": "தேடு",
+    "loading": "வருது...",
+    "success": "சரியா ஆச்சு",
+    "error": "தப்பு",
+    "confirm": "சரிப்படுத்து",
+    "yes": "ஆமா",
+    "no": "இல்ல",
+    "total": "ஒட்டுமொத்தம்",
+    "date": "நாள்",
+    "amount": "பணம்",
+    "name": "பேரு",
+    "status": "நிலை",
+    "actions": "செய்யுறது"
+  },
+  "auth": {
+    "login": "உள்ள வா",
+    "logout": "வெளிய போ",
+    "email": "மெயிலு",
+    "password": "பாஸ்வேர்டு",
+    "forgot_password": "பாஸ்வேர்டு மறந்துட்டியா?",
+    "welcome_back": "மறுபடியும் வாங்க!"
+  },
+  "inventory": {
+    "title": "சாமான் லிஸ்டு",
+    "product": "சாமான்",
+    "quantity": "எவ்வளவு",
+    "unit": "அளவு",
+    "low_stock": "சாமான் குறஞ்சுடுது",
+    "add_item": "சாமான் சேர்"
+  },
+  "sales": {
+    "title": "விக்குறது",
+    "invoice": "கணக்கு சீட்டு",
+    "customer": "வாங்குறவரு",
+    "new_sale": "புது விக்கிறது",
+    "total_sales": "மொத்த விக்கிறது"
+  },
+  "purchases": {
+    "title": "வாங்குறது",
+    "supplier": "கொடுக்குறவரு",
+    "new_purchase": "புது வாங்கிறது",
+    "total_purchases": "மொத்த வாங்கிறது"
+  },
+  "accounts": {
+    "title": "கணக்கு",
+    "income": "வர்ற பணம்",
+    "expense": "போற பணம்",
+    "balance": "மிச்சம்",
+    "profit": "லாபம்",
+    "loss": "நஷ்டம்"
+  }
+}
