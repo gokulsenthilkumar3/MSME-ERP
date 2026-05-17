@@ -208,7 +208,7 @@ export default function InvoicesPage() {
           </div>
         )}
 
-        <div className="form-group" style={{ marginTop: '1rem' }}>
+        <div className="form-group invoice-items-header">
           <label className="form-label" htmlFor="inv-notes">📝 குறிப்புகள் (விருப்பமானது)</label>
           <textarea id="inv-notes" className="form-input" value={notes}
             onChange={(e) => setNotes(e.target.value)} placeholder="மாதாந்திர விநியோகம்..." />

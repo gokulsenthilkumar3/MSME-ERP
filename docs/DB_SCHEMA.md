@@ -17,50 +17,51 @@ invoices ──< stock_movements >── products
 
 ## 1. tenants
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| name | TEXT | Business name |
-| gstin | TEXT | Nullable, validated format |
-| phone | TEXT | Primary contact |
-| address | TEXT | |
-| logo_url | TEXT | Supabase Storage URL |
-| language | TEXT | `'ta'` or `'en'` |
-| plan | TEXT | `'free'` / `'pro'` / `'business'` |
-| invoice_prefix | TEXT | e.g. `'INV'` |
-| invoice_seq | INT | Auto-incrementing counter |
+| Column         | Type | Notes                             |
+| -------------- | ---- | --------------------------------- |
+| id             | UUID | PK                                |
+| name           | TEXT | Business name                     |
+| gstin          | TEXT | Nullable, validated format        |
+| phone          | TEXT | Primary contact                   |
+| address        | TEXT |                                   |
+| logo_url       | TEXT | Supabase Storage URL              |
+| language       | TEXT | `'ta'` or `'en'`                  |
+| plan           | TEXT | `'free'` / `'pro'` / `'business'` |
+| invoice_prefix | TEXT | e.g. `'INV'`                      |
+| invoice_seq    | INT  | Auto-incrementing counter         |
 
 ---
 
 ## 2. users
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | Matches Supabase Auth user id |
-| tenant_id | UUID | FK → tenants.id |
-| phone | TEXT | |
-| name | TEXT | |
-| role | TEXT | `'owner'` / `'staff'` |
+| Column    | Type | Notes                         |
+| --------- | ---- | ----------------------------- |
+| id        | UUID | Matches Supabase Auth user id |
+| tenant_id | UUID | FK → tenants.id               |
+| phone     | TEXT |                               |
+| name      | TEXT |                               |
+| role      | TEXT | `'owner'` / `'staff'`         |
 
 ---
 
 ## 3. products
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| tenant_id | UUID | FK |
-| name | TEXT | |
-| sku | TEXT | |
-| unit | TEXT | `pcs` / `kg` / `litre` / `box` |
-| price | NUMERIC(10,2) | Default selling price |
-| gst_rate | NUMERIC(5,2) | 0 / 5 / 12 / 18 / 28 |
-| hsn_code | TEXT | |
-| stock_qty | NUMERIC(10,3) | Current stock |
-| low_stock_threshold | NUMERIC(10,3) | Alert trigger |
-| is_active | BOOLEAN | Soft delete |
+| Column              | Type          | Notes                          |
+| ------------------- | ------------- | ------------------------------ |
+| id                  | UUID          | PK                             |
+| tenant_id           | UUID          | FK                             |
+| name                | TEXT          |                                |
+| sku                 | TEXT          |                                |
+| unit                | TEXT          | `pcs` / `kg` / `litre` / `box` |
+| price               | NUMERIC(10,2) | Default selling price          |
+| gst_rate            | NUMERIC(5,2)  | 0 / 5 / 12 / 18 / 28           |
+| hsn_code            | TEXT          |                                |
+| stock_qty           | NUMERIC(10,3) | Current stock                  |
+| low_stock_threshold | NUMERIC(10,3) | Alert trigger                  |
+| is_active           | BOOLEAN       | Soft delete                    |
 
 **Indexes:**
+
 - `idx_products_tenant_sku (tenant_id, sku)`
 - `idx_products_tenant_name (tenant_id, name)`
 
@@ -68,15 +69,15 @@ invoices ──< stock_movements >── products
 
 ## 4. customers
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| tenant_id | UUID | FK |
-| name | TEXT | |
-| phone | TEXT | |
-| gstin | TEXT | Nullable |
-| address | TEXT | |
-| balance | NUMERIC(10,2) | Running balance (+ = dues, - = advance) |
+| Column    | Type          | Notes                                   |
+| --------- | ------------- | --------------------------------------- |
+| id        | UUID          | PK                                      |
+| tenant_id | UUID          | FK                                      |
+| name      | TEXT          |                                         |
+| phone     | TEXT          |                                         |
+| gstin     | TEXT          | Nullable                                |
+| address   | TEXT          |                                         |
+| balance   | NUMERIC(10,2) | Running balance (+ = dues, - = advance) |
 
 **Index:** `idx_customers_tenant_phone (tenant_id, phone)`
 
@@ -84,22 +85,23 @@ invoices ──< stock_movements >── products
 
 ## 5. invoices
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| tenant_id | UUID | FK |
-| customer_id | UUID | FK → customers.id |
-| invoice_no | TEXT | Auto-generated (INV-0001) |
-| invoice_date | DATE | |
-| due_date | DATE | Nullable |
-| subtotal | NUMERIC(10,2) | Before tax |
-| total_gst | NUMERIC(10,2) | Total tax amount |
-| total | NUMERIC(10,2) | Grand total |
-| status | TEXT | `'draft'` / `'sent'` / `'paid'` / `'overdue'` |
-| pdf_url | TEXT | Supabase Storage URL |
-| notes | TEXT | Nullable |
+| Column       | Type          | Notes                                         |
+| ------------ | ------------- | --------------------------------------------- |
+| id           | UUID          | PK                                            |
+| tenant_id    | UUID          | FK                                            |
+| customer_id  | UUID          | FK → customers.id                             |
+| invoice_no   | TEXT          | Auto-generated (INV-0001)                     |
+| invoice_date | DATE          |                                               |
+| due_date     | DATE          | Nullable                                      |
+| subtotal     | NUMERIC(10,2) | Before tax                                    |
+| total_gst    | NUMERIC(10,2) | Total tax amount                              |
+| total        | NUMERIC(10,2) | Grand total                                   |
+| status       | TEXT          | `'draft'` / `'sent'` / `'paid'` / `'overdue'` |
+| pdf_url      | TEXT          | Supabase Storage URL                          |
+| notes        | TEXT          | Nullable                                      |
 
 **Indexes:**
+
 - `idx_invoices_tenant_date (tenant_id, invoice_date DESC)`
 - `idx_invoices_status (tenant_id, status)`
 
@@ -107,30 +109,30 @@ invoices ──< stock_movements >── products
 
 ## 6. invoice_items
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| invoice_id | UUID | FK → invoices.id |
-| tenant_id | UUID | FK (denormalised for RLS) |
-| product_id | UUID | FK → products.id |
-| qty | NUMERIC(10,3) | |
+| Column     | Type          | Notes                       |
+| ---------- | ------------- | --------------------------- |
+| id         | UUID          | PK                          |
+| invoice_id | UUID          | FK → invoices.id            |
+| tenant_id  | UUID          | FK (denormalised for RLS)   |
+| product_id | UUID          | FK → products.id            |
+| qty        | NUMERIC(10,3) |                             |
 | unit_price | NUMERIC(10,2) | Snapshot at time of invoice |
-| gst_rate | NUMERIC(5,2) | Snapshot |
-| line_total | NUMERIC(10,2) | qty × unit_price |
+| gst_rate   | NUMERIC(5,2)  | Snapshot                    |
+| line_total | NUMERIC(10,2) | qty × unit_price            |
 
 ---
 
 ## 7. ledger_entries
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| tenant_id | UUID | FK |
-| customer_id | UUID | FK → customers.id |
-| type | TEXT | `'debit'` (customer owes) / `'credit'` (customer paid) |
-| amount | NUMERIC(10,2) | |
-| reference_id | UUID | Nullable — invoice id |
-| note | TEXT | |
+| Column       | Type          | Notes                                                  |
+| ------------ | ------------- | ------------------------------------------------------ |
+| id           | UUID          | PK                                                     |
+| tenant_id    | UUID          | FK                                                     |
+| customer_id  | UUID          | FK → customers.id                                      |
+| type         | TEXT          | `'debit'` (customer owes) / `'credit'` (customer paid) |
+| amount       | NUMERIC(10,2) |                                                        |
+| reference_id | UUID          | Nullable — invoice id                                  |
+| note         | TEXT          |                                                        |
 
 **Index:** `idx_ledger_customer_date (customer_id, created_at DESC)`
 
@@ -138,15 +140,15 @@ invoices ──< stock_movements >── products
 
 ## 8. stock_movements
 
-| Column | Type | Notes |
-|---|---|---|
-| id | UUID | PK |
-| tenant_id | UUID | FK |
-| product_id | UUID | FK → products.id |
-| movement_type | TEXT | `'in'` / `'out'` / `'adjustment'` |
-| qty | NUMERIC(10,3) | |
-| reference_id | UUID | Nullable — invoice id |
-| note | TEXT | |
+| Column        | Type          | Notes                             |
+| ------------- | ------------- | --------------------------------- |
+| id            | UUID          | PK                                |
+| tenant_id     | UUID          | FK                                |
+| product_id    | UUID          | FK → products.id                  |
+| movement_type | TEXT          | `'in'` / `'out'` / `'adjustment'` |
+| qty           | NUMERIC(10,3) |                                   |
+| reference_id  | UUID          | Nullable — invoice id             |
+| note          | TEXT          |                                   |
 
 **Index:** `idx_stock_product_date (product_id, created_at DESC)`
 

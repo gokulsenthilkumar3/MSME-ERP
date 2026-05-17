@@ -4,16 +4,16 @@
 
 The MSME ERP supports **8 languages** targeting MSMEs in Tamil Nadu and the Nilgiris region:
 
-| Code | Language | Script | Native Name | Region |
-|------|----------|--------|-------------|--------|
-| `en` | English | Latin | English | Global |
-| `ta` | Tamil | Tamil | தமிழ் | Tamil Nadu |
-| `ml` | Malayalam | Malayalam | മലയാളം | Kerala / TN border |
-| `bad` | Badaga | Latin (no standard script) | Badaga | Nilgiris |
-| `iru` | Irula | Tamil (adapted) | இருள | Nilgiris / Coimbatore |
-| `tod` | Toda | Latin (IPA-based) | Tòdr | Nilgiris |
-| `kot` | Kota | Tamil (adapted) | கோத | Nilgiris |
-| `kur` | Kurumba (Alu/Jenu/Betta) | Kannada / Tamil | ಕುರುಂಬ | Nilgiris |
+| Code  | Language                 | Script                     | Native Name | Region                |
+| ----- | ------------------------ | -------------------------- | ----------- | --------------------- |
+| `en`  | English                  | Latin                      | English     | Global                |
+| `ta`  | Tamil                    | Tamil                      | தமிழ்       | Tamil Nadu            |
+| `ml`  | Malayalam                | Malayalam                  | മലയാളം      | Kerala / TN border    |
+| `bad` | Badaga                   | Latin (no standard script) | Badaga      | Nilgiris              |
+| `iru` | Irula                    | Tamil (adapted)            | இருள        | Nilgiris / Coimbatore |
+| `tod` | Toda                     | Latin (IPA-based)          | Tòdr        | Nilgiris              |
+| `kot` | Kota                     | Tamil (adapted)            | கோத         | Nilgiris              |
+| `kur` | Kurumba (Alu/Jenu/Betta) | Kannada / Tamil            | ಕುರುಂಬ      | Nilgiris              |
 
 > ⚠️ Badaga, Irula, Toda, Kota, and Kurumba are **oral/endangered languages** with no universally standardized script. The translations provided here are phonetic approximations using the closest available script (Tamil, Kannada, or Latin). Community validation is strongly recommended before production use.
 
@@ -22,6 +22,7 @@ The MSME ERP supports **8 languages** targeting MSMEs in Tamil Nadu and the Nilg
 ## Architecture
 
 ### Library
+
 Use **`i18next`** with **`react-i18next`** for the frontend.
 
 ```bash
@@ -48,21 +49,21 @@ src/
 ### i18n Configuration (`src/i18n/index.ts`)
 
 ```typescript
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import HttpBackend from 'i18next-http-backend';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import HttpBackend from "i18next-http-backend";
 
 i18n
   .use(HttpBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'ta', 'ml', 'bad', 'iru', 'tod', 'kot', 'kur'],
-    ns: ['common'],
-    defaultNS: 'common',
-    backend: { loadPath: '/locales/{{lng}}/{{ns}}.json' },
+    fallbackLng: "en",
+    supportedLngs: ["en", "ta", "ml", "bad", "iru", "tod", "kot", "kur"],
+    ns: ["common"],
+    defaultNS: "common",
+    backend: { loadPath: "/locales/{{lng}}/{{ns}}.json" },
     interpolation: { escapeValue: false },
   });
 
@@ -72,17 +73,17 @@ export default i18n;
 ### Language Switcher Component
 
 ```tsx
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const LANGUAGES = [
-  { code: 'en',  label: 'English' },
-  { code: 'ta',  label: 'தமிழ்' },
-  { code: 'ml',  label: 'മലയാളം' },
-  { code: 'bad', label: 'Badaga' },
-  { code: 'iru', label: 'இருள' },
-  { code: 'tod', label: 'Toda' },
-  { code: 'kot', label: 'கோத' },
-  { code: 'kur', label: 'ಕುರುಂಬ' },
+  { code: "en", label: "English" },
+  { code: "ta", label: "தமிழ்" },
+  { code: "ml", label: "മലയാളം" },
+  { code: "bad", label: "Badaga" },
+  { code: "iru", label: "இருள" },
+  { code: "tod", label: "Toda" },
+  { code: "kot", label: "கோத" },
+  { code: "kur", label: "ಕುರುಂಬ" },
 ];
 
 export const LanguageSwitcher = () => {
@@ -94,7 +95,9 @@ export const LanguageSwitcher = () => {
       aria-label="Select language"
     >
       {LANGUAGES.map((lang) => (
-        <option key={lang.code} value={lang.code}>{lang.label}</option>
+        <option key={lang.code} value={lang.code}>
+          {lang.label}
+        </option>
       ))}
     </select>
   );

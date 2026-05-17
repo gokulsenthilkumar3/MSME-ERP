@@ -14,24 +14,26 @@
 
 ### Color Palette
 
-| Token | Hex | Usage |
-|---|---|---|
-| Primary | `#1A6B3C` | Buttons, active nav, CTA |
-| Accent | `#F4A200` | Low-stock badges, alerts |
-| Background | `#F9FAFB` | Page background |
-| Surface | `#FFFFFF` | Cards, modals |
-| Text Primary | `#111827` | Headings and body text |
-| Text Muted | `#6B7280` | Placeholders, secondary labels |
-| Danger | `#DC2626` | Errors, delete actions |
-| Success | `#16A34A` | Paid status, completed actions |
+| Token        | Hex       | Usage                          |
+| ------------ | --------- | ------------------------------ |
+| Primary      | `#1A6B3C` | Buttons, active nav, CTA       |
+| Accent       | `#F4A200` | Low-stock badges, alerts       |
+| Background   | `#F9FAFB` | Page background                |
+| Surface      | `#FFFFFF` | Cards, modals                  |
+| Text Primary | `#111827` | Headings and body text         |
+| Text Muted   | `#6B7280` | Placeholders, secondary labels |
+| Danger       | `#DC2626` | Errors, delete actions         |
+| Success      | `#16A34A` | Paid status, completed actions |
 
 ### Typography
+
 - System font stack: `-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
 - Headings: `font-semibold`, 18–24px
 - Body: 14–16px
 - Invoice totals: 20–28px (prominent)
 
 ### Spacing & Touch
+
 - Minimum tap target: **44×44px**
 - Card padding: 16px
 - Form input height: 48px
@@ -42,15 +44,16 @@
 
 ### Bottom Navigation (Mobile)
 
-| Tab | Icon | Tamil Label |
-|---|---|---|
-| Home | 🏠 | முகப்பு |
-| Invoices | 📄 | பில்கள் |
-| Products | 📦 | பொருட்கள் |
-| Customers | 🙋 | வாடிக்கையாளர் |
-| Settings | ⚙️ | அமைப்புகள் |
+| Tab       | Icon | Tamil Label   |
+| --------- | ---- | ------------- |
+| Home      | 🏠   | முகப்பு       |
+| Invoices  | 📄   | பில்கள்       |
+| Products  | 📦   | பொருட்கள்     |
+| Customers | 🙋   | வாடிக்கையாளர் |
+| Settings  | ⚙️   | அமைப்புகள்    |
 
 ### Header (all screens)
+
 - Left: Shop name
 - Center: Screen title
 - Right: Sync status (🟢 online / ⚫ offline / 🔄 syncing)
@@ -87,10 +90,12 @@
 ### 4.2 Create Invoice
 
 **Step 1 — Customer**
+
 - Searchable dropdown by name or phone
 - "+ புதிய வாடிக்கையாளர்" inline modal
 
 **Step 2 — Add Items**
+
 - Product search (name or SKU)
 - Quantity input (numeric keyboard)
 - Unit price auto-filled from product (editable)
@@ -99,6 +104,7 @@
 - Item list with swipe-to-delete
 
 **Step 3 — Totals + Actions**
+
 ```
 ┌───────────────────────────────┐
 │ மொத்தம் (before GST): ₹950   │
@@ -110,6 +116,7 @@
 ```
 
 **Post-creation screen:**
+
 - ✅ பில் உருவாக்கப்பட்டது!
 - [ PDF பார்க்க ] [ WhatsApp-ல் அனுப்பு ] [ புதிய பில் ]
 

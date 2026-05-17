@@ -8,13 +8,14 @@
 
 ## 2. Target Users
 
-| Persona | Description |
-|---|---|
-| **Shop Owner** | Kirana, textile, pharma, hardware shops |
-| **Service Owner** | Salon, repair shop, workshop (service + products) |
-| **Trader / Wholesaler** | Manages multiple SKUs and bulk stock |
+| Persona                 | Description                                       |
+| ----------------------- | ------------------------------------------------- |
+| **Shop Owner**          | Kirana, textile, pharma, hardware shops           |
+| **Service Owner**       | Salon, repair shop, workshop (service + products) |
+| **Trader / Wholesaler** | Manages multiple SKUs and bulk stock              |
 
 ### User Constraints
+
 - Uses Android phone heavily; maybe one old PC at shop
 - Prefers local language (Tamil) for daily operations
 - Limited time for training; wants "just works" flows
@@ -22,6 +23,7 @@
 ## 3. Goals and Non-Goals
 
 ### 3.1 Goals (v1)
+
 - Create a GST-compliant invoice in under 30 seconds
 - Track current stock and low-stock items
 - Maintain customer dues and basic ledger
@@ -29,6 +31,7 @@
 - Keep UX local-language first, usable with minimal training
 
 ### 3.2 Non-Goals (v1)
+
 - Full accounting / general ledger
 - Payroll, HR, and advanced financial reporting
 - Multi-branch, large-enterprise workflows
@@ -45,6 +48,7 @@
 ## 5. Scope (v1)
 
 ### 5.1 In Scope
+
 - Tenant onboarding (phone-OTP, business details, GSTIN)
 - Product and service catalog
 - Sales invoicing:
@@ -63,6 +67,7 @@
   - Sync when online
 
 ### 5.2 Out of Scope (v1)
+
 - Purchase invoices and supplier management
 - Bank reconciliation
 - Multi-warehouse inventory
@@ -71,29 +76,29 @@
 
 ## 6. Functional Requirements
 
-| ID | Requirement |
-|---|---|
-| R1 | User can sign up using phone-OTP and create a business profile |
-| R2 | User can configure GSTIN, shop address, and logo for invoice header |
-| R3 | User can create/edit/delete products with price, GST rate, and stock |
-| R4 | User can create customers with optional GSTIN and track dues |
-| R5 | User can create invoices with line items, tax breakup, and totals |
-| R6 | System auto-updates stock and customer ledger when invoice is finalised |
-| R7 | User can generate and download PDF invoice |
-| R8 | User can share invoice via WhatsApp link |
-| R9 | User can view daily/weekly sales and dues summary |
-| R10 | App supports Tamil and English; language toggleable per tenant |
+| ID  | Requirement                                                             |
+| --- | ----------------------------------------------------------------------- |
+| R1  | User can sign up using phone-OTP and create a business profile          |
+| R2  | User can configure GSTIN, shop address, and logo for invoice header     |
+| R3  | User can create/edit/delete products with price, GST rate, and stock    |
+| R4  | User can create customers with optional GSTIN and track dues            |
+| R5  | User can create invoices with line items, tax breakup, and totals       |
+| R6  | System auto-updates stock and customer ledger when invoice is finalised |
+| R7  | User can generate and download PDF invoice                              |
+| R8  | User can share invoice via WhatsApp link                                |
+| R9  | User can view daily/weekly sales and dues summary                       |
+| R10 | App supports Tamil and English; language toggleable per tenant          |
 
 ## 7. Non-Functional Requirements
 
-| Attribute | Requirement |
-|---|---|
-| Performance | Initial load < 3s on 4G |
-| Reliability | No data loss on network drop; writes idempotent |
-| Security | Tenant isolation via Supabase RLS; HTTPS everywhere |
-| Usability | 2–3 taps for primary actions; large tap targets |
-| Compliance | Invoice format aligned with basic GST layout |
-| Platform | Chrome/Edge on Windows; Chrome on Android |
+| Attribute   | Requirement                                         |
+| ----------- | --------------------------------------------------- |
+| Performance | Initial load < 3s on 4G                             |
+| Reliability | No data loss on network drop; writes idempotent     |
+| Security    | Tenant isolation via Supabase RLS; HTTPS everywhere |
+| Usability   | 2–3 taps for primary actions; large tap targets     |
+| Compliance  | Invoice format aligned with basic GST layout        |
+| Platform    | Chrome/Edge on Windows; Chrome on Android           |
 
 ## 8. Success Metrics
 
