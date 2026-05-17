@@ -1,0 +1,74 @@
+{
+  "_note": "Kota — Tamil/Kannada script adaptation. ~1500 speakers, Nilgiris. Community validation required.",
+  "app": {
+    "name": "MSME ERP",
+    "tagline": "Nim vyapara saralagagi nodu"
+  },
+  "nav": {
+    "dashboard": "Munde Patte",
+    "inventory": "Vastu Patte",
+    "sales": "Ade",
+    "purchases": "Kolle",
+    "accounts": "Lekka",
+    "reports": "Vivara",
+    "settings": "Guritu",
+    "logout": "Hori Hogo"
+  },
+  "common": {
+    "save": "Itu",
+    "cancel": "Bidu",
+    "delete": "Tege",
+    "edit": "Thiruthu",
+    "add": "Seri",
+    "search": "Hudu",
+    "loading": "Bartide...",
+    "success": "Geli",
+    "error": "Tappu",
+    "confirm": "Nischita",
+    "yes": "Ou",
+    "no": "Illa",
+    "total": "Elli",
+    "date": "Dina",
+    "amount": "Hana",
+    "name": "Hesaru",
+    "status": "Sthiti",
+    "actions": "Kriye"
+  },
+  "auth": {
+    "login": "Olle Hogo",
+    "logout": "Hori Hogo",
+    "email": "Kavali",
+    "password": "Gupta Pada",
+    "forgot_password": "Gupta Pada Maretu?",
+    "welcome_back": "Matte Svagata!"
+  },
+  "inventory": {
+    "title": "Vastu Patte",
+    "product": "Vastu",
+    "quantity": "Prameya",
+    "unit": "Alave",
+    "low_stock": "Kammi Vastu",
+    "add_item": "Vastu Seri"
+  },
+  "sales": {
+    "title": "Ade",
+    "invoice": "Hisa Patte",
+    "customer": "Giraaki",
+    "new_sale": "Hosa Ade",
+    "total_sales": "Elli Ade"
+  },
+  "purchases": {
+    "title": "Kolle",
+    "supplier": "Kottavaru",
+    "new_purchase": "Hosa Kolle",
+    "total_purchases": "Elli Kolle"
+  },
+  "accounts": {
+    "title": "Lekka",
+    "income": "Aadaaya",
+    "expense": "Kharch",
+    "balance": "Ulidhiruva",
+    "profit": "Laabha",
+    "loss": "Naashta"
+  }
+}

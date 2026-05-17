@@ -1,0 +1,74 @@
+{
+  "_note": "Kurumba (Alu/Jenu/Betta dialects) — Kannada script. ~300k speakers, Nilgiris. Community validation required.",
+  "app": {
+    "name": "MSME ERP",
+    "tagline": "ನಿಮ್ಮ ವ್ಯಾಪಾರ ಸರಳವಾಗಿ ನಿರ್ವಹಿಸಿ"
+  },
+  "nav": {
+    "dashboard": "ಮುಖ್ಯ ಪಟ್ಟಿ",
+    "inventory": "ಸಾಮಾನು ಪಟ್ಟಿ",
+    "sales": "ಮಾರಾಟ",
+    "purchases": "ಖರೀದಿ",
+    "accounts": "ಲೆಕ್ಕ",
+    "reports": "ವಿವರ",
+    "settings": "ಗುರುತು",
+    "logout": "ಹೊರ ಹೋಗು"
+  },
+  "common": {
+    "save": "ಇಡು",
+    "cancel": "ಬಿಡು",
+    "delete": "ತೆಗೆ",
+    "edit": "ತಿದ್ದು",
+    "add": "ಸೇರಿಸು",
+    "search": "ಹುಡುಕು",
+    "loading": "ತರುತ್ತಿದೆ...",
+    "success": "ಗೆಲ್ಲು",
+    "error": "ತಪ್ಪು",
+    "confirm": "ಖಚಿತ",
+    "yes": "ಹೌದು",
+    "no": "ಇಲ್ಲ",
+    "total": "ಒಟ್ಟು",
+    "date": "ದಿನ",
+    "amount": "ಹಣ",
+    "name": "ಹೆಸರು",
+    "status": "ಸ್ಥಿತಿ",
+    "actions": "ಕ್ರಿಯೆ"
+  },
+  "auth": {
+    "login": "ಒಳ ಹೋಗು",
+    "logout": "ಹೊರ ಹೋಗು",
+    "email": "ಕಾವಲಿ",
+    "password": "ಗುಪ್ತ ಪದ",
+    "forgot_password": "ಗುಪ್ತ ಪದ ಮರೆತೆಯಾ?",
+    "welcome_back": "ಮತ್ತೆ ಸ್ವಾಗತ!"
+  },
+  "inventory": {
+    "title": "ಸಾಮಾನು ಪಟ್ಟಿ",
+    "product": "ವಸ್ತು",
+    "quantity": "ಎಷ್ಟು",
+    "unit": "ಅಳತೆ",
+    "low_stock": "ಕಡಿಮೆ ಸಾಮಾನು",
+    "add_item": "ವಸ್ತು ಸೇರಿಸು"
+  },
+  "sales": {
+    "title": "ಮಾರಾಟ",
+    "invoice": "ಬಿಲ್ ಪಟ್ಟಿ",
+    "customer": "ಗಿರಾಕಿ",
+    "new_sale": "ಹೊಸ ಮಾರಾಟ",
+    "total_sales": "ಒಟ್ಟು ಮಾರಾಟ"
+  },
+  "purchases": {
+    "title": "ಖರೀದಿ",
+    "supplier": "ಕೊಡುವವರು",
+    "new_purchase": "ಹೊಸ ಖರೀದಿ",
+    "total_purchases": "ಒಟ್ಟು ಖರೀದಿ"
+  },
+  "accounts": {
+    "title": "ಲೆಕ್ಕ",
+    "income": "ಆದಾಯ",
+    "expense": "ಖರ್ಚು",
+    "balance": "ಉಳಿದಿರುವ",
+    "profit": "ಲಾಭ",
+    "loss": "ನಷ್ಟ"
+  }
+}
