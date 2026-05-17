@@ -62,7 +62,7 @@ export default function SettingsPage() {
   if (editProfile) {
     return (
       <div>
-        <div className="section-header" style={{ marginBottom: '1.5rem' }}>
+        <div className="section-header section-header-lg">
           <h1>{t('settings')}</h1>
           <button className="btn btn-secondary btn-sm" onClick={() => setEditProfile(false)}>{t('cancel')}</button>
         </div>
@@ -92,16 +92,11 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h1 style={{ marginBottom: '1.5rem' }}>{t('settings')}</h1>
+      <h1 className="section-header-lg">{t('settings')}</h1>
 
       {/* Profile Summary */}
-      <div className="card" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{
-          width: 56, height: 56, borderRadius: '50%',
-          background: 'var(--color-primary)', color: 'white',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.5rem', fontWeight: 700, flexShrink: 0,
-        }}>
+      <div className="card profile-card">
+        <div className="avatar">
           {(tenant?.name ?? 'S').charAt(0).toUpperCase()}
         </div>
         <div>
@@ -112,7 +107,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Menu Items */}
-      <div className="card" style={{ padding: 0, overflow: 'hidden', marginBottom: '1rem' }}>
+      <div className="card settings-menu-card">
         <button className="list-item" id="edit-profile-btn" onClick={() => {
           setForm({
             name: tenantData.name ?? '',
@@ -161,7 +156,7 @@ export default function SettingsPage() {
         வெளியேறு / Logout
       </button>
 
-      <p className="text-xs text-muted" style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <p className="text-xs text-muted settings-footer">
         MSME ERP v0.1 · Nilgiris-first billing
       </p>
 
@@ -178,10 +173,9 @@ export default function SettingsPage() {
             <div className="lang-modal-header">
               <span className="lang-modal-title">🌐 மொழி தேர்வு / Select Language</span>
               <button
-                className="btn btn-secondary btn-sm"
+                className="btn btn-secondary lang-modal-close"
                 onClick={() => setShowLangModal(false)}
                 aria-label="Close language selector"
-                style={{ minHeight: '36px', padding: '0 12px' }}
               >
                 <X size={16} />
               </button>
@@ -196,14 +190,14 @@ export default function SettingsPage() {
                     className={`lang-option${isActive ? ' active' : ''}`}
                     onClick={() => changeLang(lang.code)}
                     aria-label={`Select ${lang.label}`}
-                    aria-pressed={isActive}
+                    aria-pressed={isActive ? 'true' : 'false'}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
+                    <div className="lang-option-inner">
                       <span className="lang-option-native">{lang.native}</span>
-                      {isActive && <Check size={14} color="var(--color-primary)" />}
+                      {isActive && <Check size={14} className="lang-check-icon" />}
                     </div>
                     <span className="lang-option-label">{lang.label}</span>
-                    <span className="lang-option-label" style={{ fontSize: '0.65rem', opacity: 0.7 }}>{lang.script}</span>
+                    <span className="lang-option-label lang-option-sub">{lang.script}</span>
                   </button>
                 );
               })}

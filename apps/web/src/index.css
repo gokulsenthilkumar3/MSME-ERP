@@ -826,6 +826,7 @@ textarea.form-input {
   right: 0;
   bottom: 0;
   background: rgba(17, 24, 39, 0.6);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
@@ -914,3 +915,76 @@ textarea.form-input {
   to { transform: scale(1); opacity: 1; }
 }
 
+/* ============================================================
+   Page Utility Classes (replaces inline styles)
+   ============================================================ */
+
+/* Dashboard */
+.greeting-wrap { margin-bottom: 1.25rem; }
+.greeting-title { font-size: 1.25rem; font-weight: 700; }
+.stat-sub { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 4px; }
+.stat-value-danger { color: var(--color-danger); }
+.alert-link { margin-left: auto; color: var(--color-warning); }
+.quick-actions-mb { margin-bottom: 1.5rem; }
+
+/* Card variants */
+.card-list { padding: 0; overflow: hidden; }
+.card-mb { margin-bottom: 1rem; }
+.empty-state-padded { padding: 2rem; }
+
+/* Section header variants */
+.section-header-lg { margin-bottom: 1.5rem; }
+.section-header-mb { margin-bottom: 1rem; }
+
+/* Auth */
+.auth-heading { margin-bottom: 0.5rem; }
+.auth-subtitle { margin-bottom: 2rem; }
+.auth-subtitle-sm { margin-bottom: 1.5rem; }
+.back-btn-mb { margin-bottom: 1rem; }
+.otp-input { letter-spacing: 0.3em; text-align: center; font-size: 1.5rem; }
+.login-footer { margin-top: 1.5rem; text-align: center; }
+
+/* Search */
+.search-wrapper { position: relative; margin-bottom: 1rem; }
+.search-icon-abs {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+}
+.search-padded { padding-left: 2.5rem; }
+
+/* Invoice create form */
+.invoice-items-header { margin-top: 1rem; }
+.invoice-item-col { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+.invoice-item-row-inner { display: flex; gap: 0.5rem; align-items: center; }
+.flex-2 { flex: 2; }
+.btn-remove { min-width: 36px; padding: 0 10px; }
+.grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+.form-label-xs { font-size: 0.7rem; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.mt-half { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.list-right-col { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.status-badge-select { cursor: pointer; border: none; background: none; font-size: 0.7rem; padding: 2px 4px; }
+
+/* Lists */
+.cursor-pointer { cursor: pointer; }
+.list-right-flex { display: flex; align-items: center; gap: 0.5rem; }
+.low-stock-icon { background: var(--color-warning-light); color: var(--color-warning); }
+
+/* Settings */
+.profile-card { margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--color-primary); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 700; flex-shrink: 0;
+}
+.settings-menu-card { padding: 0; overflow: hidden; margin-bottom: 1rem; }
+.settings-footer { text-align: center; margin-top: 2rem; }
+.lang-modal-close { min-height: 36px; padding: 0 12px; }
+.lang-option-inner { display: flex; justify-content: space-between; width: 100%; align-items: flex-start; }
+.lang-option-sub { font-size: 0.65rem; opacity: 0.7; }

@@ -106,8 +106,8 @@ export default function LoginPage() {
       <div className="auth-card">
         {step === 'phone' && (
           <>
-            <h1 style={{ marginBottom: '0.5rem' }}>வணக்கம்! 🙏</h1>
-            <p className="text-muted text-sm" style={{ marginBottom: '2rem' }}>
+            <h1 className="auth-heading">வணக்கம்! 🙏</h1>
+            <p className="text-muted text-sm auth-subtitle">
               உங்கள் கடையை நிர்வகிக்க உள்நுழைக
             </p>
             <div className="form-group">
@@ -138,14 +138,13 @@ export default function LoginPage() {
         {step === 'otp' && (
           <>
             <button
-              className="btn btn-secondary btn-sm"
-              style={{ marginBottom: '1rem' }}
+              className="btn btn-secondary btn-sm back-btn-mb"
               onClick={() => setStep('phone')}
             >
               ← திரும்பு
             </button>
-            <h2 style={{ marginBottom: '0.5rem' }}>OTP சரிபார்</h2>
-            <p className="text-muted text-sm" style={{ marginBottom: '1.5rem' }}>
+            <h2 className="auth-heading">OTP சரிபார்</h2>
+            <p className="text-muted text-sm auth-subtitle-sm">
               {formatPhone(phone)} க்கு அனுப்பப்பட்டது
             </p>
             <div className="form-group">
@@ -154,14 +153,13 @@ export default function LoginPage() {
               </label>
               <input
                 id="otp-input"
-                className="form-input"
+                className="form-input otp-input"
                 type="number"
                 placeholder="123456"
                 maxLength={6}
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.slice(0, 6))}
                 onKeyDown={(e) => e.key === 'Enter' && handleVerifyOtp()}
-                style={{ letterSpacing: '0.3em', textAlign: 'center', fontSize: '1.5rem' }}
               />
             </div>
             <button
@@ -177,8 +175,8 @@ export default function LoginPage() {
 
         {step === 'onboard' && isNew && (
           <>
-            <h2 style={{ marginBottom: '0.5rem' }}>கடை விவரங்கள்</h2>
-            <p className="text-muted text-sm" style={{ marginBottom: '1.5rem' }}>
+            <h2 className="auth-heading">கடை விவரங்கள்</h2>
+            <p className="text-muted text-sm auth-subtitle-sm">
               உங்கள் கடையை அமைக்கவும்
             </p>
             <div className="form-group">
@@ -206,7 +204,7 @@ export default function LoginPage() {
         )}
       </div>
 
-      <p className="text-xs text-muted" style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+      <p className="text-xs text-muted login-footer">
         MSME ERP v0.1 — Tamil-first billing for Indian shops
       </p>
     </div>

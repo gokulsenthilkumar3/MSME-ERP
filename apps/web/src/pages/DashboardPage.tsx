@@ -36,27 +36,27 @@ export default function DashboardPage() {
   return (
     <div>
       {/* Greeting */}
-      <div style={{ marginBottom: '1.25rem' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 700 }}>
+      <div className="greeting-wrap">
+        <h1 className="greeting-title">
           வணக்கம்! 🙏
         </h1>
         <p className="text-muted text-sm">{tenant?.name ?? 'உங்கள் கடை'}</p>
       </div>
 
       {/* Stat Cards */}
-      <div className="card-grid" style={{ marginBottom: '1rem' }}>
+      <div className="card-grid card-mb">
         <div className="stat-card primary">
           <div className="stat-label">{t('todaySales')}</div>
           <div className="stat-value">
             {summaryLoading ? '...' : formatCurrency(summary?.today_sales ?? 0)}
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.8)', marginTop: '4px' }}>
+          <div className="stat-sub">
             {summary?.today_invoice_count ?? 0} பில்கள்
           </div>
         </div>
         <div className="stat-card">
           <div className="stat-label">{t('totalDues')}</div>
-          <div className="stat-value" style={{ color: 'var(--color-danger)' }}>
+          <div className="stat-value stat-value-danger">
             {summaryLoading ? '...' : formatCurrency(summary?.total_dues ?? 0)}
           </div>
         </div>
@@ -64,12 +64,12 @@ export default function DashboardPage() {
 
       {/* Low Stock Alert */}
       {(summary?.low_stock_count ?? 0) > 0 && (
-        <div className="alert-banner warning" style={{ marginBottom: '1rem' }}>
+        <div className="alert-banner warning card-mb">
           <AlertTriangle size={18} />
           <span>
             ⚠️ {summary?.low_stock_count} பொருட்கள் குறைவு சரக்கில் உள்ளன
           </span>
-          <Link to="/products?filter=low-stock" className="text-sm font-semibold" style={{ marginLeft: 'auto', color: 'var(--color-warning)' }}>
+          <Link to="/products?filter=low-stock" className="text-sm font-semibold alert-link">
             பார்க்க →
           </Link>
         </div>
@@ -79,7 +79,7 @@ export default function DashboardPage() {
       <div className="section-header">
         <span className="section-title">{t('quickActions')}</span>
       </div>
-      <div className="quick-actions" style={{ marginBottom: '1.5rem' }}>
+      <div className="quick-actions quick-actions-mb">
         <Link to="/invoices/new" className="quick-action">
           <div className="quick-action-icon">
             <FileText size={20} />
@@ -102,8 +102,8 @@ export default function DashboardPage() {
 
       {/* Sales Trend Chart */}
       {trendData && trendData.length > 0 && (
-        <div className="card" style={{ marginBottom: '1rem' }}>
-          <div className="section-header" style={{ marginBottom: '1rem' }}>
+        <div className="card card-mb">
+          <div className="section-header section-header-mb">
             <span className="section-title">கடந்த 30 நாள் விற்பனை</span>
           </div>
           <ResponsiveContainer width="100%" height={160}>
@@ -145,9 +145,9 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+      <div className="card card-list">
         {!recentInvoices || recentInvoices.length === 0 ? (
-          <div className="empty-state" style={{ padding: '2rem' }}>
+          <div className="empty-state empty-state-padded">
             <div className="empty-state-icon">
               <FileText size={24} />
             </div>

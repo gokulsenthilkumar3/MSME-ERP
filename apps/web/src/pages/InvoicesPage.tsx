@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { Plus, FileText, Search, ChevronRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { invoicesApi, customersApi, productsApi } from '../lib/api';
@@ -28,12 +27,6 @@ const statusLabel: Record<Status, string> = {
   overdue: '⏰ Overdue',
 };
 
-const statusBadge: Record<Status, string> = {
-  draft: 'badge-warning',
-  sent: 'badge-primary',
-  paid: 'badge-success',
-  overdue: 'badge-danger',
-};
 
 export default function InvoicesPage() {
   const { t } = useTranslation();
@@ -118,7 +111,7 @@ export default function InvoicesPage() {
   if (showCreate) {
     return (
       <div>
-        <div className="section-header" style={{ marginBottom: '1.5rem' }}>
+        <div className="section-header section-header-lg">
           <h1>{t('createInvoice')}</h1>
           <button className="btn btn-secondary btn-sm" onClick={() => { setShowCreate(false); resetCreate(); }}>{t('cancel')}</button>
         </div>
@@ -142,7 +135,7 @@ export default function InvoicesPage() {
         </div>
 
         {/* Items */}
-        <div className="section-header" style={{ marginTop: '1rem' }}>
+        <div className="section-header invoice-items-header">
           <span className="section-title">பொருட்கள்</span>
           <button className="btn btn-secondary btn-sm" id="add-item-btn" onClick={addItem}>
             <Plus size={16} /> {t('addItem')}
@@ -150,11 +143,10 @@ export default function InvoicesPage() {
         </div>
 
         {items.map((item, idx) => (
-          <div key={idx} className="invoice-item-row" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <div key={idx} className="invoice-item-row invoice-item-col">
+            <div className="invoice-item-row-inner">
               <select
-                className="form-input form-select"
-                style={{ flex: 2 }}
+                className="form-input form-select flex-2"
                 value={item.product_id}
                 aria-label="Select product"
                 title="Select product"
@@ -166,26 +158,25 @@ export default function InvoicesPage() {
                 ))}
               </select>
               <button
-                className="btn btn-danger btn-sm"
-                style={{ minWidth: '36px', padding: '0 10px' }}
+                className="btn btn-danger btn-sm btn-remove"
                 onClick={() => removeItem(idx)}
               >✕</button>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+            <div className="grid-3col">
               <div>
-                <label className="form-label" style={{ fontSize: '0.7rem' }}>அளவு</label>
+                <label className="form-label form-label-xs">அளவு</label>
                 <input className="form-input" type="number" min="0.001" step="0.001"
                   aria-label="Quantity" placeholder="1"
                   value={item.qty} onChange={(e) => updateItem(idx, 'qty', e.target.value)} />
               </div>
               <div>
-                <label className="form-label" style={{ fontSize: '0.7rem' }}>விலை (₹)</label>
+                <label className="form-label form-label-xs">விலை (₹)</label>
                 <input className="form-input" type="number" min="0" step="0.01"
                   aria-label="Unit price" placeholder="0.00"
                   value={item.unit_price} onChange={(e) => updateItem(idx, 'unit_price', e.target.value)} />
               </div>
               <div>
-                <label className="form-label" style={{ fontSize: '0.7rem' }}>GST %</label>
+                <label className="form-label form-label-xs">GST %</label>
                 <select className="form-input form-select" value={item.gst_rate}
                   aria-label="GST rate" title="GST rate"
                   onChange={(e) => updateItem(idx, 'gst_rate', e.target.value)}>
@@ -193,7 +184,7 @@ export default function InvoicesPage() {
                 </select>
               </div>
             </div>
-            <div className="text-sm text-muted" style={{ textAlign: 'right' }}>
+            <div className="text-sm text-muted text-right">
               வரி உட்பட: {formatCurrency(item.qty * item.unit_price * (1 + item.gst_rate / 100))}
             </div>
           </div>
@@ -225,8 +216,7 @@ export default function InvoicesPage() {
 
         <button
           id="generate-invoice-btn"
-          className="btn btn-primary btn-full"
-          style={{ marginTop: '0.5rem' }}
+          className="btn btn-primary btn-full mt-half"
           disabled={!customerId || items.length === 0 || createMutation.isPending}
           onClick={() =>
             createMutation.mutate({
@@ -245,14 +235,14 @@ export default function InvoicesPage() {
 
   return (
     <div>
-      <div className="section-header" style={{ marginBottom: '1rem' }}>
+      <div className="section-header section-header-mb">
         <h1>{t('invoices')}</h1>
         <span className="badge badge-primary">{invoices.length}</span>
       </div>
 
-      <div style={{ position: 'relative', marginBottom: '1rem' }}>
-        <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
-        <input id="invoices-search" className="form-input" style={{ paddingLeft: '2.5rem' }}
+      <div className="search-wrapper">
+        <Search size={16} className="search-icon-abs" />
+        <input id="invoices-search" className="form-input search-padded"
           placeholder={`${t('search')} பில்களை...`}
           value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
@@ -266,7 +256,7 @@ export default function InvoicesPage() {
           <p className="empty-state-desc">புதிய பில் உருவாக்கவும்</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="card card-list">
           {invoices.map((inv) => (
             <div key={inv.id} className="list-item">
               <div className="list-item-icon">
@@ -276,11 +266,10 @@ export default function InvoicesPage() {
                 <div className="list-item-title">{inv.customers?.name ?? 'வாடிக்கையாளர்'}</div>
                 <div className="list-item-subtitle">{inv.invoice_no} · {inv.invoice_date}</div>
               </div>
-              <div className="list-item-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+              <div className="list-item-right list-right-col">
                 <div className="font-semibold">{formatCurrency(inv.total)}</div>
                 <select
-                  className="badge"
-                  style={{ cursor: 'pointer', border: 'none', background: 'none', fontSize: '0.7rem', padding: '2px 4px' }}
+                  className="badge status-badge-select"
                   value={inv.status}
                   aria-label="Invoice status"
                   title="Invoice status"
@@ -292,7 +281,7 @@ export default function InvoicesPage() {
                   ))}
                 </select>
               </div>
-              <ChevronRight size={16} className="text-muted" style={{ marginLeft: '4px' }} />
+              <ChevronRight size={16} className="text-muted" />
             </div>
           ))}
         </div>

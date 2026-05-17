@@ -109,7 +109,7 @@ export default function ProductsPage() {
   if (showForm) {
     return (
       <div>
-        <div className="section-header" style={{ marginBottom: '1.5rem' }}>
+        <div className="section-header section-header-lg">
           <h1>{editProduct ? 'பொருள் திருத்து' : t('addProduct')}</h1>
           <button className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
         </div>
@@ -187,8 +187,7 @@ export default function ProductsPage() {
         {editProduct && (
           <button
             id="delete-product-btn"
-            className="btn btn-danger btn-full"
-            style={{ marginTop: '0.75rem' }}
+            className="btn btn-danger btn-full mt-3"
             onClick={() => deleteMutation.mutate(editProduct.id)}
             disabled={deleteMutation.isPending}
           >
@@ -201,18 +200,17 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <div className="section-header" style={{ marginBottom: '1rem' }}>
+        <div className="section-header section-header-mb">
         <h1>{t('products')}</h1>
         <span className="badge badge-primary">{products.length}</span>
       </div>
 
       {/* Search */}
-      <div style={{ position: 'relative', marginBottom: '1rem' }}>
-        <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
+      <div className="search-wrapper">
+        <Search size={16} className="search-icon-abs" />
         <input
           id="products-search"
-          className="form-input"
-          style={{ paddingLeft: '2.5rem' }}
+          className="form-input search-padded"
           placeholder={`${t('search')} பொருளை...`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -229,14 +227,14 @@ export default function ProductsPage() {
           <p className="empty-state-desc">புதிய பொருளை சேர்க்கவும்</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="card card-list">
           {products.map((p) => (
             <div
               key={p.id}
               className="list-item"
               onClick={() => openEdit(p)}
             >
-              <div className="list-item-icon" style={isLowStock(p) ? { background: 'var(--color-warning-light)', color: 'var(--color-warning)' } : {}}>
+              <div className={`list-item-icon${isLowStock(p) ? ' low-stock-icon' : ''}`}>
                 {isLowStock(p) ? <AlertTriangle size={18} /> : <Package size={18} />}
               </div>
               <div className="list-item-content">

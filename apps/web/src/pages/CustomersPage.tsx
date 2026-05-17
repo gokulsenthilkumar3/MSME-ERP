@@ -78,7 +78,7 @@ export default function CustomersPage() {
   if (showForm) {
     return (
       <div>
-        <div className="section-header" style={{ marginBottom: '1.5rem' }}>
+        <div className="section-header section-header-lg">
           <h1>{editCustomer ? 'வாடிக்கையாளர் திருத்து' : t('addCustomer')}</h1>
           <button className="btn btn-secondary btn-sm" onClick={resetForm}>{t('cancel')}</button>
         </div>
@@ -113,14 +113,14 @@ export default function CustomersPage() {
 
   return (
     <div>
-      <div className="section-header" style={{ marginBottom: '1rem' }}>
+      <div className="section-header section-header-mb">
         <h1>{t('customers')}</h1>
         <span className="badge badge-primary">{customers.length}</span>
       </div>
 
-      <div style={{ position: 'relative', marginBottom: '1rem' }}>
-        <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
-        <input id="customers-search" className="form-input" style={{ paddingLeft: '2.5rem' }}
+      <div className="search-wrapper">
+        <Search size={16} className="search-icon-abs" />
+        <input id="customers-search" className="form-input search-padded"
           placeholder={`${t('search')} வாடிக்கையாளரை...`}
           value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
@@ -134,9 +134,9 @@ export default function CustomersPage() {
           <p className="empty-state-desc">புதிய வாடிக்கையாளரை சேர்க்கவும்</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="card card-list">
           {customers.map((c) => (
-            <div key={c.id} className="list-item" style={{ cursor: 'pointer' }}
+            <div key={c.id} className="list-item cursor-pointer"
               onClick={() => openEdit(c)}>
               <div className="list-item-icon">
                 <Users size={18} />
@@ -145,7 +145,7 @@ export default function CustomersPage() {
                 <div className="list-item-title">{c.name}</div>
                 <div className="list-item-subtitle">{c.phone}</div>
               </div>
-              <div className="list-item-right" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div className="list-item-right list-right-flex">
                 {c.balance > 0 ? (
                   <span className="badge badge-danger">🔴 {formatCurrency(c.balance)}</span>
                 ) : c.balance < 0 ? (
