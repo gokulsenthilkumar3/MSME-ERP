@@ -8,7 +8,6 @@ function required(key: string): string {
 
 export const config = {
   port: Number(process.env.PORT ?? 4000),
-  jwtSecret: required('JWT_SECRET'),
   supabase: {
     url: required('SUPABASE_URL'),
     anonKey: required('SUPABASE_ANON_KEY'),
