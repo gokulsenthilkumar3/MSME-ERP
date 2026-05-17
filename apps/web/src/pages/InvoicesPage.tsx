@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Plus, FileText, Search, ChevronRight } from 'lucide-react';
+import { Plus, FileText, Search, ChevronRight, Printer } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { invoicesApi, customersApi, productsApi } from '../lib/api';
 
@@ -77,6 +77,15 @@ export default function InvoicesPage() {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
       toast.success('நிலை மாற்றப்பட்டது');
     },
+  });
+
+  const printMutation = useMutation({
+    mutationFn: (id: string) => invoicesApi.getPdf(id).then(r => r.data),
+    onSuccess: (data) => {
+      if (data.pdf_url) window.open(data.pdf_url, '_blank');
+      else toast.error('PDF இன்னும் தயாராகவில்லை');
+    },
+    onError: () => toast.error('PDF கிடைக்கவில்லை'),
   });
 
   const resetCreate = () => {
@@ -281,7 +290,15 @@ export default function InvoicesPage() {
                   ))}
                 </select>
               </div>
-              <ChevronRight size={16} className="text-muted" />
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={(e) => { e.stopPropagation(); printMutation.mutate(inv.id); }}
+                disabled={printMutation.isPending}
+                title="Print PDF"
+                style={{ marginLeft: '8px', padding: '6px' }}
+              >
+                <Printer size={16} />
+              </button>
             </div>
           ))}
         </div>

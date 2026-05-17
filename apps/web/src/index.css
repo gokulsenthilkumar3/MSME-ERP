@@ -986,3 +986,33 @@ textarea.form-input {
 .lang-modal-close { min-height: 36px; padding: 0 12px; }
 .lang-option-inner { display: flex; justify-content: space-between; width: 100%; align-items: flex-start; }
 .lang-option-sub { font-size: 0.65rem; opacity: 0.7; }
+
+/* ============================================================
+   Print Media Styles
+   ============================================================ */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  .navbar, .sidebar, .fab, .section-header button, .search-wrapper, .btn {
+    display: none !important;
+  }
+  .content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
