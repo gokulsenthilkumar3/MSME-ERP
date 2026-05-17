@@ -190,7 +190,6 @@ export default function SettingsPage() {
                     className={`lang-option${isActive ? ' active' : ''}`}
                     onClick={() => changeLang(lang.code)}
                     aria-label={`Select ${lang.label}`}
-                    aria-pressed={isActive}
                   >
                     <div className="lang-option-inner">
                       <span className="lang-option-native">{lang.native}</span>
