@@ -63,12 +63,12 @@ Offline Path:
 
 ### 2.5 Infrastructure & CI/CD
 
-| Service | Purpose |
-|---|---|
-| Vercel | Host React PWA (auto-deploy from `main`) |
-| Render | Host Node.js API (Docker container) |
-| Supabase | Postgres + Auth + Storage + Realtime |
-| Upstash Redis | Bull queue for background jobs |
+| Service        | Purpose                                        |
+| -------------- | ---------------------------------------------- |
+| Vercel         | Host React PWA (auto-deploy from `main`)       |
+| Render         | Host Node.js API (Docker container)            |
+| Supabase       | Postgres + Auth + Storage + Realtime           |
+| Upstash Redis  | Bull queue for background jobs                 |
 | GitHub Actions | Lint → Test → Build → Deploy on push to `main` |
 
 ## 3. Data Flows
