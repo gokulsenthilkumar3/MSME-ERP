@@ -25,10 +25,14 @@ invoices ──< stock_movements >── products
 | phone | TEXT | Primary contact |
 | address | TEXT | |
 | logo_url | TEXT | Supabase Storage URL |
-| language | TEXT | `'ta'` or `'en'` |
+| language | TEXT | Default language for the tenant — see valid codes below |
 | plan | TEXT | `'free'` / `'pro'` / `'business'` |
 | invoice_prefix | TEXT | e.g. `'INV'` |
 | invoice_seq | INT | Auto-incrementing counter |
+
+**`language` valid values:** `'en'` `'ta'` `'ml'` `'bad'` `'iru'` `'tod'` `'kot'` `'kur'`  
+Default: `'ta'`  
+This sets the default language for all new staff users under this tenant.
 
 ---
 
@@ -41,6 +45,17 @@ invoices ──< stock_movements >── products
 | phone | TEXT | |
 | name | TEXT | |
 | role | TEXT | `'owner'` / `'staff'` |
+| language_code | TEXT | Per-user language override; defaults to tenant's `language` |
+
+**`language_code` constraint:**
+```sql
+ALTER TABLE users
+  ADD COLUMN language_code TEXT NOT NULL DEFAULT 'en',
+  ADD CONSTRAINT users_language_code_check
+    CHECK (language_code IN ('en','ta','ml','bad','iru','tod','kot','kur'));
+```
+
+**Fallback resolution order:** `users.language_code` → `tenants.language` → `'en'`
 
 ---
 
@@ -162,4 +177,38 @@ CREATE POLICY tenant_isolation ON products
       SELECT tenant_id FROM users WHERE id = auth.uid()
     )
   );
+```
+
+---
+
+## 9. i18n / Language Migration
+
+### Migration: Add `language_code` to `users`
+
+```sql
+-- Migration: 20260517_add_language_code_to_users.sql
+ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'en';
+
+ALTER TABLE users
+  ADD CONSTRAINT users_language_code_check
+    CHECK (language_code IN ('en','ta','ml','bad','iru','tod','kot','kur'));
+
+COMMENT ON COLUMN users.language_code IS
+  'Per-user UI language. Supported: en, ta, ml, bad (Badaga), iru (Irula), tod (Toda), kot (Kota), kur (Kurumba).';
+```
+
+### Migration: Update `tenants.language` constraint
+
+```sql
+-- Migration: 20260517_update_tenant_language_constraint.sql
+ALTER TABLE tenants
+  DROP CONSTRAINT IF EXISTS tenants_language_check;
+
+ALTER TABLE tenants
+  ADD CONSTRAINT tenants_language_check
+    CHECK (language IN ('en','ta','ml','bad','iru','tod','kot','kur'));
+
+COMMENT ON COLUMN tenants.language IS
+  'Default language for this tenant. New staff users inherit this. Supported: en, ta, ml, bad, iru, tod, kot, kur.';
 ```

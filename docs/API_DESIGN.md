@@ -42,16 +42,86 @@ Verify OTP and return JWT.
 ---
 
 ### GET `/me`
-Return current user and tenant profile.
+Return current user and tenant profile, including `language_code`.
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "phone": "+91XXXXXXXXXX",
+  "name": "Gokul",
+  "role": "owner",
+  "language_code": "ta",
+  "tenant": {
+    "id": "uuid",
+    "name": "My Shop",
+    "language": "ta",
+    "gstin": "33AAAAA0000A1Z5"
+  }
+}
+```
+
+---
+
+### PATCH `/me`
+Update current user's profile including language preference.
+
+**Body:**
+```json
+{
+  "name": "Gokul",
+  "language_code": "bad"
+}
+```
+
+**Validation:** `language_code` must be one of `en | ta | ml | bad | iru | tod | kot | kur`.
+
+**Response:** `200 OK` — updated user object.
 
 ---
 
 ### PATCH `/me/tenant`
-Update tenant profile (name, GSTIN, address, language, invoice_prefix).
+Update tenant profile (name, GSTIN, address, default language, invoice_prefix).
+
+**Body:**
+```json
+{
+  "name": "My Kirana",
+  "gstin": "33AAAAA0000A1Z5",
+  "language": "ta"
+}
+```
+
+**Validation:** `language` must be one of `en | ta | ml | bad | iru | tod | kot | kur`.
 
 ---
 
-## 2. Products
+## 2. i18n / Language
+
+### GET `/i18n/languages`
+Return list of all supported languages. Used by the frontend `LanguageSwitcher` component.
+
+**Response:** `200 OK`
+```json
+{
+  "languages": [
+    { "code": "en",  "label": "English",  "script": "Latin",     "tribal": false },
+    { "code": "ta",  "label": "தமிழ்",      "script": "Tamil",     "tribal": false },
+    { "code": "ml",  "label": "മലയാളം",    "script": "Malayalam", "tribal": false },
+    { "code": "bad", "label": "Badaga",     "script": "Latin",     "tribal": true },
+    { "code": "iru", "label": "இருள",      "script": "Tamil",     "tribal": true },
+    { "code": "tod", "label": "Toda",       "script": "Latin",     "tribal": true },
+    { "code": "kot", "label": "Kota",       "script": "Kannada",   "tribal": true },
+    { "code": "kur", "label": "ಕುರುಂಬ",   "script": "Kannada",   "tribal": true }
+  ]
+}
+```
+
+> Note: Locale JSON strings are served as static assets from Vercel CDN at `/locales/{code}/common.json` — not via this API. This endpoint is only for language metadata.
+
+---
+
+## 3. Products
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -79,7 +149,7 @@ Update tenant profile (name, GSTIN, address, language, invoice_prefix).
 
 ---
 
-## 3. Customers
+## 4. Customers
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -92,7 +162,7 @@ Update tenant profile (name, GSTIN, address, language, invoice_prefix).
 
 ---
 
-## 4. Invoices
+## 5. Invoices
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -132,7 +202,7 @@ Update tenant profile (name, GSTIN, address, language, invoice_prefix).
 
 ---
 
-## 5. Dashboard
+## 6. Dashboard
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -143,7 +213,7 @@ Update tenant profile (name, GSTIN, address, language, invoice_prefix).
 
 ---
 
-## 6. Error Format
+## 7. Error Format
 
 All errors follow this structure:
 
@@ -163,4 +233,5 @@ All errors follow this structure:
 | `UNAUTHORIZED` | 401 | Missing / invalid JWT |
 | `FORBIDDEN` | 403 | Resource belongs to another tenant |
 | `CONFLICT` | 409 | Duplicate SKU, invoice no, etc. |
+| `INVALID_LANGUAGE` | 422 | `language_code` not in supported list |
 | `SERVER_ERROR` | 500 | Unexpected server error |
