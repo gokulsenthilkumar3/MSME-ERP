@@ -1,0 +1,74 @@
+{
+  "_note": "Badaga — phonetic Latin transliteration. ~400k speakers, Nilgiris. Community validation required.",
+  "app": {
+    "name": "MSME ERP",
+    "tagline": "Nimage vyaapara saralagagi nirihe"
+  },
+  "nav": {
+    "dashboard": "Mule Patte",
+    "inventory": "Saamaanu Patte",
+    "sales": "Adige",
+    "purchases": "Kolida",
+    "accounts": "Legaa",
+    "reports": "Vivara",
+    "settings": "Guritu",
+    "logout": "Huri Hogo"
+  },
+  "common": {
+    "save": "Ittuko",
+    "cancel": "Biduko",
+    "delete": "Teduko",
+    "edit": "Thiruthu",
+    "add": "Sere",
+    "search": "Hudu",
+    "loading": "Tharuthide...",
+    "success": "Geli",
+    "error": "Tappitu",
+    "confirm": "Nischaya",
+    "yes": "Ou",
+    "no": "Illa",
+    "total": "Elli",
+    "date": "Dina",
+    "amount": "Hana",
+    "name": "Hesaru",
+    "status": "Sthiti",
+    "actions": "Kela"
+  },
+  "auth": {
+    "login": "Olle Hogo",
+    "logout": "Huri Hogo",
+    "email": "Kavali",
+    "password": "Guptha Pada",
+    "forgot_password": "Guptha Pada Maretu?",
+    "welcome_back": "Matte Swagatha!"
+  },
+  "inventory": {
+    "title": "Saamaanu Patte",
+    "product": "Vastu",
+    "quantity": "Adike",
+    "unit": "Alave",
+    "low_stock": "Kammi Saamaanu",
+    "add_item": "Vastu Sere"
+  },
+  "sales": {
+    "title": "Adige",
+    "invoice": "Hisa Patte",
+    "customer": "Giraaki",
+    "new_sale": "Hosa Adige",
+    "total_sales": "Elli Adige"
+  },
+  "purchases": {
+    "title": "Kolida",
+    "supplier": "Kottavanu",
+    "new_purchase": "Hosa Kolida",
+    "total_purchases": "Elli Kolida"
+  },
+  "accounts": {
+    "title": "Legaa",
+    "income": "Aadaaya",
+    "expense": "Kharch",
+    "balance": "Ulidhiruva",
+    "profit": "Laabha",
+    "loss": "Naashta"
+  }
+}
